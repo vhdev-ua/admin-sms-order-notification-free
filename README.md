@@ -12,15 +12,8 @@ This admin plugin sends SMS notifications to administrators when new orders are 
 - 📊 Proper logging and error handling
 
 ## Installation
-
-1. **Install Twilio SDK dependency:**
    ```bash
-   cd /path/to/shopware
-   composer require twilio/sdk:^6.0
-   ```
-
-2. **Install and activate the plugin:**
-   ```bash
+   composer require vhdev-ua/admin-sms-order-notification-free
    bin/console plugin:refresh
    bin/console plugin:install --activate AdminSmsOrderNotificationFree
    bin/console cache:clear
