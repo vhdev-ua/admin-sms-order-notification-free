@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Admin SMS Order Notification Settings (Free)</title>
+        <title lang="de-DE">Admin SMS Bestellbenachrichtigung Einstellungen (Kostenlos)</title>
+
+        <input-field type="text">
+            <name>twilioSid</name>
+            <label>Twilio Account SID</label>
+            <label lang="de-DE">Twilio Account SID</label>
+            <helpText>Your Twilio Account SID from the Twilio Console</helpText>
+            <helpText lang="de-DE">Ihre Twilio Account SID aus der Twilio Konsole</helpText>
+        </input-field>
+
+        <input-field type="password">
+            <name>twilioAuthToken</name>
+            <label>Twilio Auth Token</label>
+            <label lang="de-DE">Twilio Auth Token</label>
+            <helpText>Your Twilio Auth Token from the Twilio Console</helpText>
+            <helpText lang="de-DE">Ihr Twilio Auth Token aus der Twilio Konsole</helpText>
+        </input-field>
+
+        <input-field type="text">
+            <name>twilioFromNumber</name>
+            <label>Twilio From Number</label>
+            <label lang="de-DE">Twilio Absender-Nummer</label>
+            <helpText>Your Twilio phone number (e.g., +1234567890)</helpText>
+            <helpText lang="de-DE">Ihre Twilio Telefonnummer (z.B. +1234567890)</helpText>
+        </input-field>
+
+        <input-field type="textarea">
+            <name>adminPhoneNumbers</name>
+            <label>Administrator Phone Numbers</label>
+            <label lang="de-DE">Administrator Telefonnummern</label>
+            <helpText>Comma-separated list of phone numbers (e.g., +1234567890, +0987654321)</helpText>
+            <helpText lang="de-DE">Kommagetrennte Liste von Telefonnummern (z.B. +1234567890, +0987654321)</helpText>
+        </input-field>
+
+        <input-field type="textarea">
+            <name>smsTemplate</name>
+            <label>SMS Template</label>
+            <label lang="de-DE">SMS Vorlage</label>
+            <helpText>SMS message template. Available variables: {orderNumber}, {amountTotal}, {customerName}, {currency}</helpText>
+            <helpText lang="de-DE">SMS Nachrichtenvorlage. Verfügbare Variablen: {orderNumber}, {amountTotal}, {customerName}, {currency}</helpText>
+            <defaultValue>New order #{orderNumber} placed with total amount {amountTotal} {currency} by {customerName}.</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>enabled</name>
+            <label>Enable SMS Notifications</label>
+            <label lang="de-DE">SMS Benachrichtigungen aktivieren</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
+    </card>
+</config>

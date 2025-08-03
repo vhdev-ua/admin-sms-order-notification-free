@@ -1,0 +1,31 @@
+{
+    "name": "vhdev/admin-sms-order-notification-free",
+    "description": "Admin plugin that sends SMS notifications to administrators when new orders are placed (Free)",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vhdev"
+        }
+    ],
+    "require": {
+        "shopware/core": ">=6.4.0",
+        "twilio/sdk": "^6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "AdminSmsOrderNotificationFree\\AdminSmsOrderNotificationFree",
+        "label": {
+            "de-DE": "Admin SMS Bestellbenachrichtigung (Kostenlos)",
+            "en-GB": "Admin SMS Order Notification (Free)"
+        },
+        "description": {
+            "de-DE": "Admin-Plugin, das SMS-Benachrichtigungen bei neuen Bestellungen an Administratoren sendet. (Kostenlos)",
+            "en-GB": "Admin plugin that sends SMS notifications to administrators on new orders. (Free)"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "AdminSmsOrderNotificationFree\\": "src/"
+        }
+    }
+}
