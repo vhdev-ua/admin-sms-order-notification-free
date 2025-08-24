@@ -5,14 +5,14 @@
 
     <services>
         <!-- SMS Service -->
-        <service id="AdminSmsOrderNotificationFree\Service\SmsService" public="true">
+        <service id="VhdevAdminSmsOrderNotificationFree\Service\SmsService" public="true">
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
             <argument type="service" id="logger"/>
         </service>
 
         <!-- Order Event Subscriber -->
-        <service id="AdminSmsOrderNotificationFree\Subscriber\OrderPlacedSubscriber" public="true">
-            <argument type="service" id="AdminSmsOrderNotificationFree\Service\SmsService"/>
+        <service id="VhdevAdminSmsOrderNotificationFree\Subscriber\OrderPlacedSubscriber" public="true">
+            <argument type="service" id="VhdevAdminSmsOrderNotificationFree\Service\SmsService"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
             <argument type="service" id="logger"/>
             <tag name="kernel.event_subscriber"/>

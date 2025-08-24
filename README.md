@@ -15,7 +15,7 @@ This admin plugin sends SMS notifications to administrators when new orders are 
    ```bash
    composer require vhdev-ua/admin-sms-order-notification-free
    bin/console plugin:refresh
-   bin/console plugin:install --activate AdminSmsOrderNotificationFree
+   bin/console plugin:install --activate VhdevAdminSmsOrderNotificationFree
    bin/console cache:clear
    ```
 
@@ -54,11 +54,11 @@ New order #{orderNumber} placed with total amount {amountTotal} UAH by {customer
 ## File Structure
 
 ```
-AdminSmsOrderNotificationFree/
+VhdevAdminSmsOrderNotificationFree/
 ├── composer.json
 ├── README.md
 └── src/
-    ├── AdminSmsOrderNotificationFree.php
+    ├── VhdevAdminSmsOrderNotificationFree.php
     ├── Resources/
     │   └── config/
     │       ├── config.xml

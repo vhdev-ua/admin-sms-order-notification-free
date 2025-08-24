@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AdminSmsOrderNotificationFree\Service;
+namespace VhdevAdminSmsOrderNotificationFree\Service;
 
 use Psr\Log\LoggerInterface;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -87,15 +87,15 @@ class SmsService
 
     private function isEnabled(): bool
     {
-        return (bool) $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.enabled');
+        return (bool) $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled');
     }
 
     private function getTwilioConfig(): array
     {
         return [
-            'sid' => $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.twilioSid'),
-            'authToken' => $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.twilioAuthToken'),
-            'fromNumber' => $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.twilioFromNumber'),
+            'sid' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioSid'),
+            'authToken' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioAuthToken'),
+            'fromNumber' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioFromNumber'),
         ];
     }
 
@@ -108,7 +108,7 @@ class SmsService
 
     private function getAdminPhoneNumbers(): array
     {
-        $phoneNumbers = $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.adminPhoneNumbers');
+        $phoneNumbers = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.adminPhoneNumbers');
         
         if (empty($phoneNumbers)) {
             return [];
@@ -119,7 +119,7 @@ class SmsService
 
     private function buildSmsMessage(array $orderData): string
     {
-        $template = $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.smsTemplate');
+        $template = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.smsTemplate');
         
                 if (empty($template)) {
             $template = 'New order #{orderNumber} placed with total amount {amountTotal} {currency} by {customerName}.';
