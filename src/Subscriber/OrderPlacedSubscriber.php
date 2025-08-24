@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace AdminSmsOrderNotificationFree\Subscriber;
+namespace VhdevAdminSmsOrderNotificationFree\Subscriber;
 
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Checkout\Order\Event\OrderStateMachineStateChangeEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use AdminSmsOrderNotificationFree\Service\SmsService;
+use VhdevAdminSmsOrderNotificationFree\Service\SmsService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
@@ -44,7 +44,7 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
         
         try {
             // Check if SMS notifications are enabled
-            $isEnabled = $this->systemConfigService->get('AdminSmsOrderNotificationFree.config.enabled');
+            $isEnabled = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled');
             $this->logger->info('SMS Order Notification: Plugin enabled status', ['enabled' => $isEnabled]);
             
             if (!$isEnabled) {
