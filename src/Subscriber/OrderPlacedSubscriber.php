@@ -72,7 +72,7 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
         }
     }
 
-        private function extractOrderData(OrderEntity $order): array
+    private function extractOrderData(OrderEntity $order): array
     {
         $customer = $order->getOrderCustomer();
         $customerName = 'Unknown Customer';
@@ -81,7 +81,7 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
             $customerName = trim($customer->getFirstName() . ' ' . $customer->getLastName());
         }
 
-                $currency = $order->getCurrency() ? $order->getCurrency()->getSymbol() : '';
+        $currency = $order->getCurrency() ? $order->getCurrency()->getSymbol() : '';
 
         return [
             'orderNumber' => $order->getOrderNumber(),
