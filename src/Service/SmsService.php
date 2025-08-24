@@ -121,7 +121,7 @@ class SmsService
     {
         $template = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.smsTemplate');
         
-                if (empty($template)) {
+        if (empty($template)) {
             $template = 'New order #{orderNumber} placed with total amount {amountTotal} {currency} by {customerName}.';
         }
 
