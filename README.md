@@ -12,40 +12,12 @@ This admin plugin sends SMS notifications to administrators when new orders are 
 - 📊 Proper logging and error handling
 
 ## Installation
-
-### Manual Installation
-
-1.  **Download/Clone the Plugin:**
-    Place the `VhdevAdminSmsOrderNotificationFree` folder into the `custom/plugins/` directory of your Shopware 6 installation.
-
-2.  **Install and activate the plugin via command line:**
-
-### Installation via Composer
-
-1.  **Add the repository to your Shopware `composer.json`:**
-    If you are installing from a local path, add the following to the `repositories` section of your main `composer.json` file in the Shopware root directory.
-
-    ```json
-    "repositories": [
-        {
-            "type": "path",
-            "url": "custom/plugins/VhdevAdminSmsOrderNotificationFree"
-        }
-    ]
-    ```
-
-2.  **Require the plugin:**
-    Run the following command from your Shopware root directory:
-    ```bash
-    composer require vhdev-ua/vhdev-admin-sms-order-notification-free
-    ```
-
-3.  **Install and activate the plugin:**
-    ```bash
-    bin/console plugin:refresh
-    bin/console plugin:install --activate VhdevAdminSmsOrderNotificationFree
-    bin/console cache:clear
-    ```
+   ```bash
+   composer require vhdev-ua/admin-sms-order-notification-free
+   bin/console plugin:refresh
+   bin/console plugin:install --activate VhdevAdminSmsOrderNotificationFree
+   bin/console cache:clear
+   ```
 
 ## Configuration
 
