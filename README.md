@@ -13,7 +13,7 @@ This admin plugin sends SMS notifications to administrators when new orders are 
 
 ## Installation
    ```bash
-   composer require vhdev-ua/admin-sms-order-notification-free
+   composer require vhdev/vhdev-admin-sms-order-notification-free
    bin/console plugin:refresh
    bin/console plugin:install --activate VhdevAdminSmsOrderNotificationFree
    bin/console cache:clear
