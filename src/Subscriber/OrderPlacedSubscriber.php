@@ -14,9 +14,14 @@ use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;
 
 class OrderPlacedSubscriber implements EventSubscriberInterface
 {
-    private SmsService $smsService;
-    private SystemConfigService $systemConfigService;
-    private LoggerInterface $logger;
+    /** @var SmsService */
+    private $smsService;
+    
+    /** @var SystemConfigService */
+    private $systemConfigService;
+    
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(
         SmsService $smsService,
