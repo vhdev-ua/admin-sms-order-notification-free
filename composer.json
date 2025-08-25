@@ -11,7 +11,7 @@
     ],
     "require": {
         "shopware/core": ">=6.0.0",
-        "twilio/sdk": "^6.0"
+        "symfony/http-client": "^5.4 || ^6.0"
     },
     "extra": {
         "shopware-plugin-class": "Vhdev\\AdminSmsOrderNotificationFree\\VhdevAdminSmsOrderNotificationFree",
