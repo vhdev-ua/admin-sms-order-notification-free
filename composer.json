@@ -2,7 +2,8 @@
     "name": "vhdev/vhdev-admin-sms-order-notification-free",
     "description": "Admin plugin that sends SMS notifications to administrators when new orders are placed (Free)",
     "type": "shopware-platform-plugin",
-    "license": "MIT",
+    "version": "1.0.0",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Vhdev"
