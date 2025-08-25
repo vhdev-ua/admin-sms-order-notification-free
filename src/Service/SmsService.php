@@ -4,8 +4,8 @@ namespace Vhdev\AdminSmsOrderNotificationFree\Service;
 
 use Psr\Log\LoggerInterface;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use Twilio\Rest\Client;
-use Twilio\Exceptions\TwilioException;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class SmsService
 {
@@ -25,15 +25,12 @@ class SmsService
 
     public function sendOrderNotification(array $orderData): void
     {
-
-        
         if (!$this->isEnabled()) {
             $this->logger->info('SMS Order Notification: Service is disabled');
             return;
         }
 
         $twilioConfig = $this->getTwilioConfig();
-
         
         if (!$this->validateTwilioConfig($twilioConfig)) {
             $this->logger->error('SMS Order Notification: Invalid Twilio configuration');
@@ -41,7 +38,6 @@ class SmsService
         }
 
         $phoneNumbers = $this->getAdminPhoneNumbers();
-
         
         if (empty($phoneNumbers)) {
             $this->logger->warning('SMS Order Notification: No admin phone numbers configured');
@@ -49,42 +45,58 @@ class SmsService
         }
 
         $message = $this->buildSmsMessage($orderData);
+        $httpClient = HttpClient::create([
+            'auth_basic' => [$twilioConfig['sid'], $twilioConfig['authToken']],
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+        ]);
 
-        
-        try {
-            $client = new Client($twilioConfig['sid'], $twilioConfig['authToken']);
-            
-            foreach ($phoneNumbers as $phoneNumber) {
-                $phoneNumber = trim($phoneNumber);
-                if (empty($phoneNumber)) {
-                    continue;
-                }
+        foreach ($phoneNumbers as $phoneNumber) {
+            $phoneNumber = trim($phoneNumber);
+            if (empty($phoneNumber)) {
+                continue;
+            }
 
-                try {
-                    $client->messages->create(
-                        $phoneNumber,
-                        [
-                            'from' => $twilioConfig['fromNumber'],
-                            'body' => $message
-                        ]
-                    );
-                    
+            try {
+                $response = $httpClient->request('POST', 'https://api.twilio.com/2010-04-01/Accounts/'.$twilioConfig['sid'].'/Messages.json', [
+                    'body' => http_build_query([
+                        'To' => $phoneNumber,
+                        'From' => $twilioConfig['fromNumber'],
+                        'Body' => $message
+                    ])
+                ]);
+
+                $statusCode = $response->getStatusCode();
+                $responseData = json_decode($response->getContent(false), true);
+
+                if ($statusCode >= 200 && $statusCode < 300) {
                     $this->logger->info('SMS Order Notification sent successfully', [
                         'phone' => $phoneNumber,
-                        'orderNumber' => $orderData['orderNumber']
+                        'orderNumber' => $orderData['orderNumber'] ?? 'N/A',
+                        'messageSid' => $responseData['sid'] ?? null
                     ]);
-                } catch (TwilioException $e) {
+                } else {
                     $this->logger->error('Failed to send SMS notification', [
                         'phone' => $phoneNumber,
-                        'error' => $e->getMessage(),
-                        'orderNumber' => $orderData['orderNumber']
+                        'statusCode' => $statusCode,
+                        'response' => $responseData,
+                        'orderNumber' => $orderData['orderNumber'] ?? 'N/A'
                     ]);
                 }
+            } catch (TransportExceptionInterface $e) {
+                $this->logger->error('Failed to send SMS notification - Transport error', [
+                    'phone' => $phoneNumber,
+                    'error' => $e->getMessage(),
+                    'orderNumber' => $orderData['orderNumber'] ?? 'N/A'
+                ]);
+            } catch (\Exception $e) {
+                $this->logger->error('Failed to send SMS notification', [
+                    'phone' => $phoneNumber,
+                    'error' => $e->getMessage(),
+                    'orderNumber' => $orderData['orderNumber'] ?? 'N/A'
+                ]);
             }
-        } catch (TwilioException $e) {
-            $this->logger->error('Twilio client initialization failed', [
-                'error' => $e->getMessage()
-            ]);
         }
     }
 
