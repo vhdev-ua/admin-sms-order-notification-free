@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "shopware/core": ">=6.0.0-DP1",
+        "shopware/core": ">=6.0.0",
         "twilio/sdk": "^6.0"
     },
     "extra": {
