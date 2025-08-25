@@ -9,8 +9,11 @@ use Twilio\Exceptions\TwilioException;
 
 class SmsService
 {
-    private SystemConfigService $systemConfigService;
-    private LoggerInterface $logger;
+    /** @var SystemConfigService */
+    private $systemConfigService;
+    
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(
         SystemConfigService $systemConfigService,
