@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace VhdevAdminSmsOrderNotificationFree\Subscriber;
+namespace Vhdev\AdminSmsOrderNotificationFree\Subscriber;
 
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Checkout\Order\Event\OrderStateMachineStateChangeEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
-use VhdevAdminSmsOrderNotificationFree\Service\SmsService;
+use Vhdev\AdminSmsOrderNotificationFree\Service\SmsService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Checkout\Cart\Event\CheckoutOrderPlacedEvent;

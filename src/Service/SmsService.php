@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VhdevAdminSmsOrderNotificationFree\Service;
+namespace Vhdev\AdminSmsOrderNotificationFree\Service;
 
 use Psr\Log\LoggerInterface;
 use Shopware\Core\System\SystemConfig\SystemConfigService;

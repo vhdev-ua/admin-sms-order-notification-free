@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VhdevAdminSmsOrderNotificationFree;
+namespace Vhdev\AdminSmsOrderNotificationFree;
 
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
