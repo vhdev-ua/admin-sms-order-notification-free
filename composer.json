@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "shopware/core": "~6.7.0 || ~6.7.1"
+        "shopware/core": "6.7.0.0 || 6.7.0.1 || 6.7.1.0 || 6.7.1.1 || 6.7.1.2"
     },
     "extra": {
         "shopware-plugin-class": "Vhdev\\AdminSmsOrderNotificationFree\\VhdevAdminSmsOrderNotificationFree",
