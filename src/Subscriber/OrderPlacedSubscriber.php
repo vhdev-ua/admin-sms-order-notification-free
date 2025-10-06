@@ -48,15 +48,6 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
         $this->logger->info('SMS Order Notification: onOrderPlaced event triggered');
         
         try {
-            // Check if SMS notifications are enabled
-            $isEnabled = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled');
-            $this->logger->info('SMS Order Notification: Plugin enabled status', ['enabled' => $isEnabled]);
-            
-            if (!$isEnabled) {
-                $this->logger->info('SMS Order Notification: Plugin is disabled, skipping SMS');
-                return;
-            }
-
             $order = $event->getOrder();
             
             if (!$order instanceof OrderEntity) {
@@ -64,10 +55,27 @@ class OrderPlacedSubscriber implements EventSubscriberInterface
                 return;
             }
 
-            $this->logger->info('SMS Order Notification: Processing order', ['orderNumber' => $order->getOrderNumber()]);
+            $salesChannelId = $order->getSalesChannelId();
+            
+            // Check if SMS notifications are enabled for this sales channel
+            $isEnabled = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled', $salesChannelId);
+            $this->logger->info('SMS Order Notification: Plugin enabled status', [
+                'enabled' => $isEnabled,
+                'salesChannelId' => $salesChannelId
+            ]);
+            
+            if (!$isEnabled) {
+                $this->logger->info('SMS Order Notification: Plugin is disabled for this sales channel, skipping SMS');
+                return;
+            }
+
+            $this->logger->info('SMS Order Notification: Processing order', [
+                'orderNumber' => $order->getOrderNumber(),
+                'salesChannelId' => $salesChannelId
+            ]);
             
             $orderData = $this->extractOrderData($order);
-            $this->smsService->sendOrderNotification($orderData);
+            $this->smsService->sendOrderNotification($orderData, $salesChannelId);
 
         } catch (\Exception $e) {
             $this->logger->error('SMS Order Notification: Error processing order placed event', [

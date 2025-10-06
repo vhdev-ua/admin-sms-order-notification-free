@@ -23,28 +23,30 @@ class SmsService
         $this->logger = $logger;
     }
 
-    public function sendOrderNotification(array $orderData): void
+    public function sendOrderNotification(array $orderData, ?string $salesChannelId = null): void
     {
-        if (!$this->isEnabled()) {
-            $this->logger->info('SMS Order Notification: Service is disabled');
+        if (!$this->isEnabled($salesChannelId)) {
+            $this->logger->info('SMS Order Notification: Service is disabled', [
+                'salesChannelId' => $salesChannelId
+            ]);
             return;
         }
 
-        $twilioConfig = $this->getTwilioConfig();
+        $twilioConfig = $this->getTwilioConfig($salesChannelId);
         
         if (!$this->validateTwilioConfig($twilioConfig)) {
             $this->logger->error('SMS Order Notification: Invalid Twilio configuration');
             return;
         }
 
-        $phoneNumbers = $this->getAdminPhoneNumbers();
+        $phoneNumbers = $this->getAdminPhoneNumbers($salesChannelId);
         
         if (empty($phoneNumbers)) {
             $this->logger->warning('SMS Order Notification: No admin phone numbers configured');
             return;
         }
 
-        $message = $this->buildSmsMessage($orderData);
+        $message = $this->buildSmsMessage($orderData, $salesChannelId);
         $httpClient = HttpClient::create([
             'auth_basic' => [$twilioConfig['sid'], $twilioConfig['authToken']],
             'headers' => [
@@ -100,17 +102,17 @@ class SmsService
         }
     }
 
-    private function isEnabled(): bool
+    private function isEnabled(?string $salesChannelId = null): bool
     {
-        return (bool) $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled');
+        return (bool) $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.enabled', $salesChannelId);
     }
 
-    private function getTwilioConfig(): array
+    private function getTwilioConfig(?string $salesChannelId = null): array
     {
         return [
-            'sid' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioSid'),
-            'authToken' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioAuthToken'),
-            'fromNumber' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioFromNumber'),
+            'sid' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioSid', $salesChannelId),
+            'authToken' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioAuthToken', $salesChannelId),
+            'fromNumber' => $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.twilioFromNumber', $salesChannelId),
         ];
     }
 
@@ -121,9 +123,9 @@ class SmsService
                !empty($config['fromNumber']);
     }
 
-    private function getAdminPhoneNumbers(): array
+    private function getAdminPhoneNumbers(?string $salesChannelId = null): array
     {
-        $phoneNumbers = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.adminPhoneNumbers');
+        $phoneNumbers = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.adminPhoneNumbers', $salesChannelId);
         
         if (empty($phoneNumbers)) {
             return [];
@@ -132,9 +134,9 @@ class SmsService
         return array_map('trim', explode(',', $phoneNumbers));
     }
 
-    private function buildSmsMessage(array $orderData): string
+    private function buildSmsMessage(array $orderData, ?string $salesChannelId = null): string
     {
-        $template = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.smsTemplate');
+        $template = $this->systemConfigService->get('VhdevAdminSmsOrderNotificationFree.config.smsTemplate', $salesChannelId);
         
         if (empty($template)) {
             $template = 'New order #{orderNumber} placed with total amount {amountTotal} {currency} by {customerName}.';
