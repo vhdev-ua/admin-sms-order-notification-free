@@ -1,0 +1,23 @@
+{
+  "base": "/bundles/vhdevadminsmsordernotificationfree/administration/",
+  "entryPoints": {
+    "vhdev-admin-sms-order-notification-free": {
+      "css": [],
+      "dynamic": [],
+      "js": [
+        "/bundles/vhdevadminsmsordernotificationfree/administration/assets/vhdev-admin-sms-order-notification-free-jByWBNS2.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

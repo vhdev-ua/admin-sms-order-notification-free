@@ -17,5 +17,14 @@
             <argument type="service" id="logger"/>
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <!-- Twilio Validation Controller -->
+        <service id="Vhdev\AdminSmsOrderNotificationFree\Controller\TwilioValidationController" public="true">
+            <argument type="service" id="logger"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>

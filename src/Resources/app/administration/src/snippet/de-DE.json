@@ -1,0 +1,12 @@
+{
+    "vhdev-sms": {
+        "validation": {
+            "buttonText": "Validieren & Test-SMS senden",
+            "buttonHelp": "Speichern Sie zuerst Ihre Einstellungen und klicken Sie dann auf diese Schaltfläche, um Ihre Twilio-Anmeldeinformationen zu validieren und eine Test-SMS an alle konfigurierten Administrator-Telefonnummern zu senden.",
+            "successTitle": "Validierung erfolgreich",
+            "errorTitle": "Validierung fehlgeschlagen",
+            "errorMessage": "Twilio-Anmeldeinformationen konnten nicht validiert werden. Bitte überprüfen Sie Ihre Konfiguration.",
+            "errorDefault": "Twilio-Anmeldeinformationen konnten nicht validiert werden."
+        }
+    }
+}
