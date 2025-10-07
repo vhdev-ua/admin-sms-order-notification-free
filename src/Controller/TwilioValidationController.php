@@ -40,7 +40,7 @@ class TwilioValidationController extends AbstractController
             'requestData' => $data
         ]);
 
-        // Читаємо збережені креденшали з бази даних
+        // Read saved credentials from database
         $sid = $this->systemConfigService->get(
             'VhdevAdminSmsOrderNotificationFree.config.twilioSid',
             $salesChannelId
@@ -69,7 +69,7 @@ class TwilioValidationController extends AbstractController
             'salesChannelId' => $salesChannelId
         ]);
 
-        // Перевірка обов'язкових полів
+        // Validate required fields
         if (empty($sid) || empty($authToken)) {
             $this->logger->warning('Missing Twilio credentials', [
                 'sid' => $sid ? 'present' : 'missing',

@@ -24,12 +24,12 @@ Component.register('vhdev-twilio-validate-button', {
         },
 
         salesChannelId() {
-            // Піднімаємося по дереву до sw-system-config компонента
+            // Traverse up the component tree to sw-system-config
             let parent = this.$parent;
             let level = 0;
             
             while (parent && level < 20) {
-                // Шукаємо currentSalesChannelId або salesChannelId
+                // Search for currentSalesChannelId or salesChannelId
                 if (parent.currentSalesChannelId) {
                     if (typeof parent.currentSalesChannelId === 'string' && parent.currentSalesChannelId !== 'null') {
                         return parent.currentSalesChannelId;
@@ -58,7 +58,7 @@ Component.register('vhdev-twilio-validate-button', {
             try {
                 const salesChannelId = this.salesChannelId;
 
-                // Отримуємо токен
+                // Get bearer token
                 let bearerToken = null;
                 try {
                     const bearerAuth = JSON.parse(localStorage.getItem('bearerAuth'));
