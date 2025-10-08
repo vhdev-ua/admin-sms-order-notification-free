@@ -51,6 +51,48 @@ Component.register('vhdev-twilio-validate-button', {
     },
 
     methods: {
+        translateMessage(backendMessage, result) {
+            // Map backend messages to translation keys
+            const messageMap = {
+                'Twilio SID and Auth Token are not configured': 'vhdev-sms.validation.messages.missingSidToken',
+                'Twilio From Number is not configured': 'vhdev-sms.validation.messages.missingFromNumber',
+                'The provided phone number is not valid': 'vhdev-sms.validation.messages.invalidPhoneNumber',
+                'Invalid credentials': 'vhdev-sms.validation.messages.invalidCredentials',
+                'Failed to connect': 'vhdev-sms.validation.messages.connectionError'
+            };
+
+            // Check if backend message matches any known pattern
+            for (const [pattern, translationKey] of Object.entries(messageMap)) {
+                if (backendMessage && backendMessage.includes(pattern)) {
+                    return this.$tc(translationKey);
+                }
+            }
+
+            // If it's a success message, build translated version
+            if (result && result.valid) {
+                let message = this.$tc('vhdev-sms.validation.messages.credentialsValid');
+                
+                if (result.testSmsSent && result.testSmsResults) {
+                    const successCount = result.testSmsResults.filter(r => r.result?.success).length;
+                    const totalCount = result.testSmsResults.length;
+                    
+                    message += ' ' + this.$tc('vhdev-sms.validation.messages.testSmsSent', 0, {
+                        successCount: successCount,
+                        totalCount: totalCount
+                    });
+                }
+                
+                if (result.accountName) {
+                    message += ` (${result.accountName})`;
+                }
+                
+                return message;
+            }
+
+            // Return original message if no translation found
+            return backendMessage;
+        },
+
         async validateCredentials() {
             this.isLoading = true;
             this.isValidated = false;
@@ -96,26 +138,27 @@ Component.register('vhdev-twilio-validate-button', {
 
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.errors?.[0]?.detail || errorData.message || `HTTP ${response.status}`);
+                    const errorMessage = errorData.errors?.[0]?.detail || errorData.message;
+                    
+                    throw new Error(this.translateMessage(errorMessage, errorData));
                 }
 
                 const result = await response.json();
 
                 if (result.valid) {
                     this.isValidated = true;
-                    let message = result.message;
-                    if (result.accountName) {
-                        message += ` (${result.accountName})`;
-                    }
+                    const translatedMessage = this.translateMessage(result.message, result);
                     
                     this.createNotificationSuccess({
                         title: this.$tc('vhdev-sms.validation.successTitle'),
-                        message: message
+                        message: translatedMessage
                     });
                 } else {
+                    const translatedMessage = this.translateMessage(result.message, result);
+                    
                     this.createNotificationError({
                         title: this.$tc('vhdev-sms.validation.errorTitle'),
-                        message: result.message || this.$tc('vhdev-sms.validation.errorMessage')
+                        message: translatedMessage || this.$tc('vhdev-sms.validation.errorMessage')
                     });
                 }
             } catch (error) {

@@ -1,0 +1,21 @@
+{
+    "vhdev-sms": {
+        "validation": {
+            "buttonText": "Validate & Send Test SMS",
+            "buttonHelp": "Save your settings first, then click this button to validate your Twilio credentials and send a test SMS to all configured administrator phone numbers.",
+            "successTitle": "Validation Successful",
+            "errorTitle": "Validation Failed",
+            "errorMessage": "Failed to validate Twilio credentials. Please check your configuration.",
+            "errorDefault": "Failed to validate Twilio credentials.",
+            "messages": {
+                "credentialsValid": "Twilio credentials are valid.",
+                "testSmsSent": "Test SMS sent to {successCount}/{totalCount} numbers",
+                "missingSidToken": "Twilio SID and Auth Token are not configured. Please save your settings first.",
+                "missingFromNumber": "Twilio From Number is not configured. Please save your settings first.",
+                "invalidPhoneNumber": "The provided phone number is not valid or not associated with your Twilio account",
+                "connectionError": "Failed to connect to Twilio API",
+                "invalidCredentials": "Invalid Twilio credentials"
+            }
+        }
+    }
+}

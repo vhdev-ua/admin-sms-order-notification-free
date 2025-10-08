@@ -6,7 +6,16 @@
             "successTitle": "Validierung erfolgreich",
             "errorTitle": "Validierung fehlgeschlagen",
             "errorMessage": "Twilio-Anmeldeinformationen konnten nicht validiert werden. Bitte überprüfen Sie Ihre Konfiguration.",
-            "errorDefault": "Twilio-Anmeldeinformationen konnten nicht validiert werden."
+            "errorDefault": "Twilio-Anmeldeinformationen konnten nicht validiert werden.",
+            "messages": {
+                "credentialsValid": "Twilio-Anmeldeinformationen sind gültig.",
+                "testSmsSent": "Test-SMS an {successCount}/{totalCount} Nummern gesendet",
+                "missingSidToken": "Twilio SID und Auth Token sind nicht konfiguriert. Bitte speichern Sie zuerst Ihre Einstellungen.",
+                "missingFromNumber": "Twilio-Absendernummer ist nicht konfiguriert. Bitte speichern Sie zuerst Ihre Einstellungen.",
+                "invalidPhoneNumber": "Die angegebene Telefonnummer ist nicht gültig oder nicht mit Ihrem Twilio-Konto verknüpft",
+                "connectionError": "Verbindung zur Twilio-API fehlgeschlagen",
+                "invalidCredentials": "Ungültige Twilio-Anmeldeinformationen"
+            }
         }
     }
 }
